@@ -37,5 +37,6 @@ class AppService:
         for task in tasks_data:
             if task["id"] == request_task['id']:
                 task.update(request_task)
-                return json.dumps(tasks_data);
+                self.tasksJSON = json.dumps(tasks_data)
+                return self.tasksJSON
         return json.dumps({'message': 'task id not found'})
