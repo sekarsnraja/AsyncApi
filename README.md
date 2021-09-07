@@ -15,5 +15,6 @@ http://localhost:5000/api/tasks
 
 http://localhost:5000/api/task
 
-5) To run pytest
+5) To run pytest:
+
 pytest -vv
