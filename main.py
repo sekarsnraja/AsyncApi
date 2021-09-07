@@ -1,7 +1,5 @@
-import logging
-import threading
-from flask import Flask, request
 from app_service import AppService
+from flask import Flask, request
 from multiprocessing.pool import ThreadPool
 
 
@@ -16,14 +14,13 @@ def home():
 
 @app.route('/api/tasks')
 def tasks():
-    return appService.get_tasks()
+    pool = ThreadPool(processes=1)
+    async_result = pool.apply_async(appService.get_tasks)
+    return async_result.get()
 
 
 @app.route('/api/task', methods=['POST'])
 def create_task():
-    format = "%(asctime)s: %(message)s"
-    logging.basicConfig(format=format, level=logging.INFO,
-                        datefmt="%H:%M:%S")
     request_data = request.get_json()
     task = request_data['task']
     pool = ThreadPool(processes=1)
